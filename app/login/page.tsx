@@ -95,6 +95,17 @@ export default async function LoginPage({
               </button>
             </form>
 
+            {!isSignup && (
+              <p className="mt-3 text-center text-[12.5px]">
+                <Link
+                  href="/recuperar-senha"
+                  className="text-ink-500 hover:text-ink-900 hover:underline"
+                >
+                  Esqueceu sua senha?
+                </Link>
+              </p>
+            )}
+
             <p className="mt-5 text-center text-[13px] text-ink-500">
               {isSignup ? 'Já tem conta? ' : 'Não tem conta? '}
               <Link
