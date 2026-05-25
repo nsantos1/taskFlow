@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { TaskForm } from './taskForm'
-import { TaskList } from './taskList'
+import { TasksView } from './tasksView'
 
 const PRIORITY_WEIGHT: Record<string, number> = {
   high: 0,
@@ -36,7 +36,7 @@ export default async function TasksPage() {
       </header>
 
       <div className="p-8">
-        <TaskList tasks={sorted} />
+        <TasksView tasks={sorted} />
       </div>
     </div>
   )
