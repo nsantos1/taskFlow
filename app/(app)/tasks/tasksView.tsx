@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { ViewSwitch } from './viewSwitch'
 import { TaskList } from './taskList'
+import { TaskBoard } from './taskBoard'
 
 type View = 'list' | 'board'
 
@@ -41,9 +42,7 @@ export function TasksView({ tasks }: { tasks: Task[] }) {
       {view === 'list' ? (
         <TaskList tasks={tasks} />
       ) : (
-        <div className="mt-12 text-center text-[14px] text-text-muted">
-          Visão Quadro — em construção (próximo bloco).
-        </div>
+        <TaskBoard tasks={tasks} />
       )}
     </div>
   )

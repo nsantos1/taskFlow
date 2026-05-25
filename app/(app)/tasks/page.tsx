@@ -13,14 +13,15 @@ export default async function TasksPage() {
 
   const { data: tasks } = await supabase
     .from('tasks')
-    .select('id, title, description, status, priority, category, due_date, created_at')
-    .order('created_at', { ascending: false })
+    .select('id, title, description, status, priority, category, due_date, position')
+    .order('priority')
+    .order('position')
 
   const sorted = (tasks ?? []).slice().sort((a, b) => {
     const pa = PRIORITY_WEIGHT[a.priority] ?? 1
     const pb = PRIORITY_WEIGHT[b.priority] ?? 1
     if (pa !== pb) return pa - pb
-    return 0
+    return a.position - b.position
   })
 
   return (
@@ -35,7 +36,7 @@ export default async function TasksPage() {
         <TaskForm />
       </header>
 
-      <div className="p-8">
+      <div className="p-4 lg:p-8">
         <TasksView tasks={sorted} />
       </div>
     </div>
