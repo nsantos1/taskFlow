@@ -124,3 +124,36 @@ export async function deleteTask(taskId: string) {
   revalidatePath('/tasks')
   return { success: true }
 }
+
+export async function moveTask(
+  taskId: string,
+  newStatus: string,
+  newPosition: number
+) {
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return { error: 'Você precisa estar logado.' }
+  }
+
+  // Validação do status — só os três valores aceitos pelo banco
+  if (!['todo', 'doing', 'done'].includes(newStatus)) {
+    return { error: 'Status inválido.' }
+  }
+
+  const { error } = await supabase
+    .from('tasks')
+    .update({
+      status: newStatus,
+      position: newPosition,
+    })
+    .eq('id', taskId)
+
+  if (error) {
+    return { error: 'Não foi possível mover a tarefa.' }
+  }
+
+  revalidatePath('/tasks')
+  return { success: true }
+}

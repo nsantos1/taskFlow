@@ -1,8 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { PriorityBadge } from '@/components/taskBadges'
+import { useState, useEffect } from 'react'
+import {
+  DndContext,
+  closestCorners,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragOverlay,
+} from '@dnd-kit/core'
+import type { DragStartEvent, DragEndEvent } from '@dnd-kit/core'
+import { BoardColumn } from './boardColumn'
+import { SortableTaskCard } from './sortableTaskCard'
 import { TaskDetail } from './taskDetail'
+import { moveTask } from './actions'
 
 type Task = {
   id: string
@@ -27,91 +38,147 @@ const PRIORITY_WEIGHT: Record<string, number> = {
   low: 2,
 }
 
-function formatDate(date: string | null): string {
-  if (!date) return ''
-  return new Date(date + 'T00:00:00').toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: 'short',
+function sortTasks(list: Task[]): Task[] {
+  return list.slice().sort((a, b) => {
+    const pa = PRIORITY_WEIGHT[a.priority] ?? 1
+    const pb = PRIORITY_WEIGHT[b.priority] ?? 1
+    if (pa !== pb) return pa - pb
+    return a.position - b.position
   })
 }
 
+/**
+ * Calcula a nova position de uma tarefa dentro da coluna de destino,
+ * respeitando a faixa de prioridade (regra da Saída B).
+ * `index` é a posição visual onde o cartão foi solto.
+ */
+function computeNewPosition(
+  dragged: Task,
+  destColumnTasks: Task[],
+  index: number
+): number {
+  // Só os vizinhos da MESMA faixa de prioridade contam.
+  const sameBand = destColumnTasks.filter(
+    (t) => t.priority === dragged.priority && t.id !== dragged.id
+  )
+
+  if (sameBand.length === 0) {
+    // Faixa vazia — primeira tarefa daquela prioridade.
+    return Date.now() % 100000
+  }
+
+  // Ordena a faixa e descobre entre quais vizinhos o cartão caiu.
+  const band = sameBand.slice().sort((a, b) => a.position - b.position)
+
+  // Quantas tarefas da MESMA faixa estão acima do ponto de soltura.
+  const tasksAboveDrop = destColumnTasks
+    .slice(0, index)
+    .filter((t) => t.priority === dragged.priority && t.id !== dragged.id)
+  const bandIndex = tasksAboveDrop.length
+
+  const before = band[bandIndex - 1]
+  const after = band[bandIndex]
+
+  if (!before && after) return after.position - 1          // topo da faixa
+  if (before && !after) return before.position + 1         // fim da faixa
+  if (before && after) return (before.position + after.position) / 2 // meio
+  return Date.now() % 100000
+}
+
 export function TaskBoard({ tasks }: { tasks: Task[] }) {
+  const [items, setItems] = useState<Task[]>(tasks)
   const [selected, setSelected] = useState<Task | null>(null)
+  const [activeTask, setActiveTask] = useState<Task | null>(null)
+
+  useEffect(() => {
+    setItems(tasks)
+  }, [tasks])
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 5 },
+    })
+  )
+
+  function handleDragStart(event: DragStartEvent) {
+    const task = items.find((t) => t.id === event.active.id)
+    setActiveTask(task ?? null)
+  }
+
+  async function handleDragEnd(event: DragEndEvent) {
+    setActiveTask(null)
+    const { active, over } = event
+    if (!over) return
+
+    const activeId = active.id as string
+    const dragged = items.find((t) => t.id === activeId)
+    if (!dragged) return
+
+    // 1. Descobrir a coluna de destino
+    let destStatus = over.id as string
+    const overTask = items.find((t) => t.id === over.id)
+    if (overTask) destStatus = overTask.status
+
+    // Tarefas que estarão na coluna de destino (sem o cartão arrastado)
+    const destTasks = sortTasks(
+      items.filter((t) => t.status === destStatus && t.id !== activeId)
+    )
+
+    // 2. Em que índice visual o cartão foi solto
+    let dropIndex = destTasks.length
+    if (overTask) {
+      const idx = destTasks.findIndex((t) => t.id === overTask.id)
+      if (idx !== -1) dropIndex = idx
+    }
+
+    // 3. Calcular a nova position (já respeitando a faixa de prioridade)
+    const newPosition = computeNewPosition(dragged, destTasks, dropIndex)
+
+    // Atualiza a tela na hora
+    setItems((prev) =>
+      prev.map((t) =>
+        t.id === activeId
+          ? { ...t, status: destStatus, position: newPosition }
+          : t
+      )
+    )
+
+    // Persiste no banco
+    await moveTask(activeId, destStatus, newPosition)
+  }
 
   return (
     <>
-      <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-        {COLUMNS.map((col) => {
-          const colTasks = tasks
-            .filter((t) => t.status === col.status)
-            .sort((a, b) => {
-              const pa = PRIORITY_WEIGHT[a.priority] ?? 1
-              const pb = PRIORITY_WEIGHT[b.priority] ?? 1
-              if (pa !== pb) return pa - pb
-              return a.position - b.position
-            })
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+          {COLUMNS.map((col) => {
+            const colTasks = sortTasks(
+              items.filter((t) => t.status === col.status)
+            )
+            return (
+              <BoardColumn
+                key={col.status}
+                status={col.status}
+                label={col.label}
+                dot={col.dot}
+                tasks={colTasks}
+                onOpen={setSelected}
+              />
+            )
+          })}
+        </div>
 
-          return (
-            <div
-              key={col.status}
-              className="bg-surface-2 border border-border-base rounded-xl2 p-3"
-            >
-              {/* Cabeçalho da coluna */}
-              <div className="flex items-center gap-2 px-1 pb-3">
-                <span
-                  className="w-2 h-2 rounded-full"
-                  style={{ background: col.dot }}
-                />
-                <span className="text-[12.5px] font-semibold text-text-primary">
-                  {col.label}
-                </span>
-                <span className="text-[11.5px] text-text-muted">
-                  {colTasks.length}
-                </span>
-              </div>
-
-              {/* Cartões da coluna */}
-              <div className="flex flex-col gap-2">
-                {colTasks.length === 0 ? (
-                  <div className="text-[12px] text-text-muted text-center py-6">
-                    Nenhuma tarefa
-                  </div>
-                ) : (
-                  colTasks.map((task) => (
-                    <button
-                      key={task.id}
-                      onClick={() => setSelected(task)}
-                      className="w-full text-left bg-elevated border border-border-base rounded-lg p-3 hover:border-text-muted transition-colors"
-                    >
-                      <div className="text-[13px] font-medium text-text-primary">
-                        {task.title}
-                      </div>
-                      {task.description && (
-                        <div className="mt-0.5 text-[11.5px] text-text-muted line-clamp-2">
-                          {task.description}
-                        </div>
-                      )}
-                      <div className="mt-2.5 flex flex-wrap items-center gap-2">
-                        <PriorityBadge priority={task.priority} />
-                        {task.category && (
-                          <span className="text-[11px] text-text-secondary">
-                            {task.category}
-                          </span>
-                        )}
-                        {task.due_date && (
-                          <span className="text-[11px] text-text-muted ml-auto">
-                            {formatDate(task.due_date)}
-                          </span>
-                        )}
-                      </div>
-                    </button>
-                  ))
-                )}
-              </div>
-            </div>
-          )
-        })}
-      </div>
+        <DragOverlay>
+          {activeTask ? (
+            <SortableTaskCard task={activeTask} onOpen={() => {}} />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
 
       {selected && (
         <TaskDetail task={selected} onClose={() => setSelected(null)} />
