@@ -25,7 +25,7 @@ export default async function DashboardPage() {
 
       <div className="p-8">
         {/* Cartões de métrica */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-elevated border border-border-base rounded-xl2 p-5">
             <div className="text-[11px] font-semibold tracking-wider text-text-muted uppercase">
               Total de tarefas

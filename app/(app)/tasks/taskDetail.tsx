@@ -63,7 +63,7 @@ export function TaskDetail({
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/40">
-      <div className="w-full max-w-[420px] h-full bg-elevated shadow-pop flex flex-col">
+      <div className="w-full sm:max-w-[420px] h-full bg-elevated shadow-pop flex flex-col">
         {/* Cabeçalho */}
         <div className="h-14 px-5 flex items-center justify-between border-b border-border-base">
           <span className="text-[13px] font-medium text-text-muted">
