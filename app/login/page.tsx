@@ -18,22 +18,22 @@ export default async function LoginPage({
   const isSignup = params.mode === 'signup'
 
   return (
-    <div className="min-h-screen bg-ink-50 flex">
+    <div className="min-h-screen bg-surface flex">
       {/* Lado esquerdo — formulário */}
       <div className="flex-1 flex flex-col">
         <div className="px-8 pt-6 flex items-center gap-2">
           <div className="w-6 h-6 rounded-md bg-ink-900" />
-          <span className="text-[14.5px] font-semibold tracking-tight text-ink-900">
+          <span className="text-[14.5px] font-semibold tracking-tight text-text-primary">
             TaskFlow
           </span>
         </div>
 
         <div className="flex-1 flex items-center justify-center px-6">
           <div className="w-full max-w-[380px]">
-            <h1 className="text-[24px] font-semibold tracking-tight text-ink-900">
+            <h1 className="text-[24px] font-semibold tracking-tight text-text-primary">
               {isSignup ? 'Crie sua conta.' : 'Bem-vindo de volta.'}
             </h1>
-            <p className="text-[13.5px] text-ink-500 mt-1.5">
+            <p className="text-[13.5px] text-text-muted mt-1.5">
               {isSignup
                 ? 'Comece a organizar suas tarefas agora.'
                 : 'Entre para continuar gerenciando suas tarefas.'}
@@ -48,7 +48,7 @@ export default async function LoginPage({
             <form className="mt-6 flex flex-col gap-4">
               {isSignup && (
                 <div>
-                  <label className="text-[12.5px] font-medium text-ink-700">
+                  <label className="text-[12.5px] font-medium text-text-secondary">
                     Nome
                   </label>
                   <input
@@ -56,13 +56,13 @@ export default async function LoginPage({
                     type="text"
                     required
                     placeholder="Seu nome"
-                    className="mt-1.5 w-full h-10 px-3 rounded-lg border border-ink-200 bg-white text-[14px] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-ink-900"
+                    className="mt-1.5 w-full h-10 px-3 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-text-primary"
                   />
                 </div>
               )}
 
               <div>
-                <label className="text-[12.5px] font-medium text-ink-700">
+                <label className="text-[12.5px] font-medium text-text-secondary">
                   Email
                 </label>
                 <input
@@ -70,12 +70,12 @@ export default async function LoginPage({
                   type="email"
                   required
                   placeholder="voce@email.com"
-                  className="mt-1.5 w-full h-10 px-3 rounded-lg border border-ink-200 bg-white text-[14px] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-ink-900"
+                  className="mt-1.5 w-full h-10 px-3 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-text-primary"
                 />
               </div>
 
               <div>
-                <label className="text-[12.5px] font-medium text-ink-700">
+                <label className="text-[12.5px] font-medium text-text-secondary">
                   Senha
                 </label>
                 <input
@@ -83,7 +83,7 @@ export default async function LoginPage({
                   type="password"
                   required
                   placeholder="••••••••"
-                  className="mt-1.5 w-full h-10 px-3 rounded-lg border border-ink-200 bg-white text-[14px] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-ink-900"
+                  className="mt-1.5 w-full h-10 px-3 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-text-primary"
                 />
               </div>
 
@@ -99,18 +99,18 @@ export default async function LoginPage({
               <p className="mt-3 text-center text-[12.5px]">
                 <Link
                   href="/recuperar-senha"
-                  className="text-ink-500 hover:text-ink-900 hover:underline"
+                  className="text-text-muted hover:text-text-primary hover:underline"
                 >
                   Esqueceu sua senha?
                 </Link>
               </p>
             )}
 
-            <p className="mt-5 text-center text-[13px] text-ink-500">
+            <p className="mt-5 text-center text-[13px] text-text-muted">
               {isSignup ? 'Já tem conta? ' : 'Não tem conta? '}
               <Link
                 href={isSignup ? '/login' : '/login?mode=signup'}
-                className="font-semibold text-ink-900 hover:underline"
+                className="font-semibold text-text-primary hover:underline"
               >
                 {isSignup ? 'Entrar' : 'Criar uma agora'}
               </Link>
@@ -118,7 +118,7 @@ export default async function LoginPage({
           </div>
         </div>
 
-        <div className="px-8 pb-6 text-[11px] text-ink-400">
+        <div className="px-8 pb-6 text-[11px] text-text-muted">
           © 2026 TaskFlow · MVP para uso pessoal
         </div>
       </div>

@@ -24,31 +24,31 @@ export default function NovaSenhaPage() {
   }
 
   return (
-    <div className="min-h-screen bg-ink-50 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-surface flex items-center justify-center px-6">
       <div className="w-full max-w-[380px]">
-        <h1 className="text-[22px] font-semibold tracking-tight text-ink-900">
+        <h1 className="text-[22px] font-semibold tracking-tight text-text-primary">
           Criar nova senha
         </h1>
 
         {done ? (
-          <div className="mt-4 text-[13.5px] text-ink-600">
+          <div className="mt-4 text-[13.5px] text-text-secondary">
             Senha atualizada! Redirecionando para o app...
           </div>
         ) : (
           <>
-            <p className="text-[13.5px] text-ink-500 mt-1.5">
+            <p className="text-[13.5px] text-text-muted mt-1.5">
               Defina a nova senha para sua conta.
             </p>
 
             {error && (
-              <div className="mt-4 text-[13px] text-status-high bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+              <div className="mt-4 text-[13px] text-danger-text bg-danger-bg border border-danger-border rounded-lg px-3 py-2">
                 {error}
               </div>
             )}
 
             <form action={handleSubmit} className="mt-5 flex flex-col gap-4">
               <div>
-                <label className="text-[12.5px] font-medium text-ink-700">
+                <label className="text-[12.5px] font-medium text-text-secondary">
                   Nova senha
                 </label>
                 <input
@@ -56,7 +56,7 @@ export default function NovaSenhaPage() {
                   type="password"
                   required
                   placeholder="••••••••"
-                  className="mt-1.5 w-full h-10 px-3 rounded-lg border border-ink-200 bg-white text-[14px] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-ink-900"
+                  className="mt-1.5 w-full h-10 px-3 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-text-primary"
                 />
               </div>
               <button

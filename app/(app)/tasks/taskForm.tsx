@@ -32,14 +32,14 @@ export function TaskForm() {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="w-full max-w-[440px] bg-white rounded-xl2 shadow-pop p-6">
+          <div className="w-full max-w-[440px] bg-elevated rounded-xl2 shadow-pop p-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-[16px] font-semibold text-ink-900">
+              <h2 className="text-[16px] font-semibold text-text-primary">
                 Nova tarefa
               </h2>
               <button
                 onClick={() => setOpen(false)}
-                className="text-ink-400 hover:text-ink-700 text-[18px] leading-none"
+                className="text-text-muted hover:text-text-primary text-[18px] leading-none"
               >
                 ×
               </button>
@@ -53,7 +53,7 @@ export function TaskForm() {
 
             <form action={handleSubmit} className="mt-4 flex flex-col gap-3.5">
               <div>
-                <label className="text-[12.5px] font-medium text-ink-700">
+                <label className="text-[12.5px] font-medium text-text-secondary">
                   Título
                 </label>
                 <input
@@ -61,31 +61,31 @@ export function TaskForm() {
                   type="text"
                   required
                   placeholder="O que precisa ser feito?"
-                  className="mt-1 w-full h-9 px-3 rounded-lg border border-ink-200 text-[14px] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-ink-900"
+                  className="mt-1 w-full h-9 px-3 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-text-primary"
                 />
               </div>
 
               <div>
-                <label className="text-[12.5px] font-medium text-ink-700">
+                <label className="text-[12.5px] font-medium text-text-secondary">
                   Descrição
                 </label>
                 <textarea
                   name="description"
                   rows={2}
                   placeholder="Detalhes (opcional)"
-                  className="mt-1 w-full px-3 py-2 rounded-lg border border-ink-200 text-[14px] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-ink-900 resize-none"
+                  className="mt-1 w-full px-3 py-2 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-text-primary resize-none"
                 />
               </div>
 
               <div className="flex gap-3">
                 <div className="flex-1">
-                  <label className="text-[12.5px] font-medium text-ink-700">
+                  <label className="text-[12.5px] font-medium text-text-secondary">
                     Status
                   </label>
                   <select
                     name="status"
                     defaultValue="todo"
-                    className="mt-1 w-full h-9 px-2.5 rounded-lg border border-ink-200 text-[14px] text-ink-900 focus:outline-none focus:border-ink-900"
+                    className="mt-1 w-full h-9 px-2.5 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary focus:outline-none focus:border-text-primary"
                   >
                     <option value="todo">A fazer</option>
                     <option value="doing">Em andamento</option>
@@ -93,13 +93,13 @@ export function TaskForm() {
                   </select>
                 </div>
                 <div className="flex-1">
-                  <label className="text-[12.5px] font-medium text-ink-700">
+                  <label className="text-[12.5px] font-medium text-text-secondary">
                     Prioridade
                   </label>
                   <select
                     name="priority"
                     defaultValue="medium"
-                    className="mt-1 w-full h-9 px-2.5 rounded-lg border border-ink-200 text-[14px] text-ink-900 focus:outline-none focus:border-ink-900"
+                    className="mt-1 w-full h-9 px-2.5 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary focus:outline-none focus:border-text-primary"
                   >
                     <option value="low">Baixa</option>
                     <option value="medium">Média</option>
@@ -110,24 +110,24 @@ export function TaskForm() {
 
               <div className="flex gap-3">
                 <div className="flex-1">
-                  <label className="text-[12.5px] font-medium text-ink-700">
+                  <label className="text-[12.5px] font-medium text-text-secondary">
                     Categoria
                   </label>
                   <input
                     name="category"
                     type="text"
                     placeholder="Ex: Faculdade"
-                    className="mt-1 w-full h-9 px-3 rounded-lg border border-ink-200 text-[14px] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-ink-900"
+                    className="mt-1 w-full h-9 px-3 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-text-primary"
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="text-[12.5px] font-medium text-ink-700">
+                  <label className="text-[12.5px] font-medium text-text-secondary">
                     Prazo
                   </label>
                   <input
                     name="due_date"
                     type="date"
-                    className="mt-1 w-full h-9 px-3 rounded-lg border border-ink-200 text-[14px] text-ink-900 focus:outline-none focus:border-ink-900"
+                    className="mt-1 w-full h-9 px-3 rounded-lg border border-border-base bg-elevated text-[14px] text-text-primary focus:outline-none focus:border-text-primary"
                   />
                 </div>
               </div>
@@ -136,7 +136,7 @@ export function TaskForm() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="h-9 px-4 rounded-lg border border-ink-200 text-[13px] font-medium text-ink-700 hover:bg-ink-100 transition-colors"
+                  className="h-9 px-4 rounded-lg border border-border-base text-[13px] font-medium text-text-secondary hover:bg-surface-2 transition-colors"
                 >
                   Cancelar
                 </button>

@@ -1,33 +1,9 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @theme {
   --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 
+  /* Paleta ink — ainda usada pelo app (será migrada no Bloco 2) */
   --color-ink-50:  #FAFAFA;
   --color-ink-100: #F4F4F5;
   --color-ink-200: #E4E4E7;
@@ -39,9 +15,50 @@ body {
   --color-ink-800: #27272A;
   --color-ink-900: #18181B;
   --color-ink-950: #09090B;
+  --color-danger-bg:     var(--danger-bg);
+  --color-danger-border: var(--danger-border);
+  --color-danger-text:   var(--danger-text);
 
+  /* Cores de status — valem nos dois temas */
   --color-status-todo:  #3B82F6;
   --color-status-doing: #F59E0B;
   --color-status-done:  #10B981;
   --color-status-high:  #EF4444;
+
+  /* Cores semânticas — apontam para variáveis que mudam com o tema */
+  --color-surface:    var(--surface);
+  --color-surface-2:  var(--surface-2);
+  --color-elevated:   var(--elevated);
+  --color-border-base:var(--border-base);
+  --color-text-primary:   var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted:     var(--text-muted);
+}
+
+/* Tema CLARO (padrão) */
+:root {
+  --surface:        #FAFAFA;
+  --surface-2:      #F4F4F5;
+  --elevated:       #FFFFFF;
+  --border-base:    #E4E4E7;
+  --text-primary:   #18181B;
+  --text-secondary: #52525B;
+  --text-muted:     #A1A1AA;
+  --danger-bg:      #FEF2F2;
+  --danger-border:  #FECACA;
+  --danger-text:    #B91C1C;
+}
+
+/* Tema ESCURO — aplicado quando o <html> tem a classe .dark */
+.dark {
+  --surface:        #18181B;
+  --surface-2:      #27272A;
+  --elevated:       #27272A;
+  --border-base:    #3F3F46;
+  --text-primary:   #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-muted:     #71717A;
+  --danger-bg:      #2A1515;
+  --danger-border:  #5B2525;
+  --danger-text:    #F87171;
 }

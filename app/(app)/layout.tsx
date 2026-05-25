@@ -23,7 +23,7 @@ export default async function AppLayout({
   const userName = profile?.full_name || user.email || 'Usuário'
 
   return (
-    <div className="flex min-h-screen bg-ink-50">
+    <div className="flex min-h-screen bg-surface">
       <Sidebar userName={userName} userEmail={user.email ?? ''} />
       <main className="flex-1">{children}</main>
     </div>

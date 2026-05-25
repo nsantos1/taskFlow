@@ -25,10 +25,10 @@ export default async function TasksPage() {
 
   return (
     <div>
-      <header className="h-14 px-8 flex items-center justify-between border-b border-ink-200 bg-white">
+      <header className="h-14 px-8 flex items-center justify-between border-b border-border-base bg-elevated">
         <div>
-          <h1 className="text-[15px] font-semibold text-ink-900">Tarefas</h1>
-          <p className="text-[12px] text-ink-500">
+          <h1 className="text-[15px] font-semibold text-text-primary">Tarefas</h1>
+          <p className="text-[12px] text-text-muted">
             {sorted.length} tarefa(s)
           </p>
         </div>
