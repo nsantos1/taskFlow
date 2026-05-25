@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
-import { Sidebar } from '@/components/sidebar'
+import { AppShell } from '@/components/appShell'
 
 export default async function AppLayout({
   children,
@@ -23,9 +23,8 @@ export default async function AppLayout({
   const userName = profile?.full_name || user.email || 'Usuário'
 
   return (
-    <div className="flex min-h-screen bg-surface">
-      <Sidebar userName={userName} userEmail={user.email ?? ''} />
-      <main className="flex-1">{children}</main>
-    </div>
+    <AppShell userName={userName} userEmail={user.email ?? ''}>
+      {children}
+    </AppShell>
   )
 }

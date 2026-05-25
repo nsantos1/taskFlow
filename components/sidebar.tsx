@@ -6,9 +6,10 @@ import { ThemeToggle } from './themeToggle'
 type SidebarProps = {
   userName: string
   userEmail: string
+  onNavigate?: () => void
 }
 
-export function Sidebar({ userName, userEmail }: SidebarProps) {
+export function Sidebar({ userName, userEmail, onNavigate }: SidebarProps) {
   const initials = userName
     .split(' ')
     .slice(0, 2)
@@ -38,14 +39,15 @@ export function Sidebar({ userName, userEmail }: SidebarProps) {
       <nav className="px-2.5 flex flex-col gap-0.5">
         <Link
           href="/dashboard"
-          className="flex items-center gap-2.5 h-8 px-2.5 rounded-md text-[13px] font-medium text-text-secondary hover:bg-surface-2 hover:text-text-primary transition-colors"
-        >
+          onClick={onNavigate}
+          className="flex items-center gap-2.5 h-8 px-2.5 rounded-md text-[13px] font-medium text-text-secondary hover:bg-surface-2 hover:text-text-primary transition-colors">
           Dashboard
         </Link>
+
         <Link
           href="/tasks"
-          className="flex items-center gap-2.5 h-8 px-2.5 rounded-md text-[13px] font-medium text-text-secondary hover:bg-surface-2 hover:text-text-primary transition-colors"
-        >
+          onClick={onNavigate}
+          className="flex items-center gap-2.5 h-8 px-2.5 rounded-md text-[13px] font-medium text-text-secondary hover:bg-surface-2 hover:text-text-primary transition-colors">
           Tarefas
         </Link>
       </nav>
