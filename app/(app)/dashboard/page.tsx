@@ -19,50 +19,50 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <header className="h-14 px-8 flex items-center border-b border-ink-200 bg-white">
-        <h1 className="text-[15px] font-semibold text-ink-900">Dashboard</h1>
+      <header className="h-14 px-8 flex items-center border-b border-border-base bg-elevated">
+        <h1 className="text-[15px] font-semibold text-text-primary">Dashboard</h1>
       </header>
 
       <div className="p-8">
         {/* Cartões de métrica */}
         <div className="grid grid-cols-3 gap-4">
-          <div className="bg-white border border-ink-200 rounded-xl2 p-5">
-            <div className="text-[11px] font-semibold tracking-wider text-ink-400 uppercase">
+          <div className="bg-elevated border border-border-base rounded-xl2 p-5">
+            <div className="text-[11px] font-semibold tracking-wider text-text-muted uppercase">
               Total de tarefas
             </div>
-            <div className="mt-2 text-[28px] font-semibold text-ink-900">
+            <div className="mt-2 text-[28px] font-semibold text-text-primary">
               {total}
             </div>
           </div>
 
-          <div className="bg-white border border-ink-200 rounded-xl2 p-5">
-            <div className="text-[11px] font-semibold tracking-wider text-ink-400 uppercase">
+          <div className="bg-elevated border border-border-base rounded-xl2 p-5">
+            <div className="text-[11px] font-semibold tracking-wider text-text-muted uppercase">
               Concluídas
             </div>
-            <div className="mt-2 text-[28px] font-semibold text-ink-900">
+            <div className="mt-2 text-[28px] font-semibold text-text-primary">
               {done}
             </div>
-            <div className="mt-1 text-[12px] text-ink-500">
+            <div className="mt-1 text-[12px] text-text-muted">
               {rate}% do total
             </div>
           </div>
 
-          <div className="bg-white border border-ink-200 rounded-xl2 p-5">
-            <div className="text-[11px] font-semibold tracking-wider text-ink-400 uppercase">
+          <div className="bg-elevated border border-border-base rounded-xl2 p-5">
+            <div className="text-[11px] font-semibold tracking-wider text-text-muted uppercase">
               Pendentes
             </div>
-            <div className="mt-2 text-[28px] font-semibold text-ink-900">
+            <div className="mt-2 text-[28px] font-semibold text-text-primary">
               {pending}
             </div>
-            <div className="mt-1 text-[12px] text-ink-500">
+            <div className="mt-1 text-[12px] text-text-muted">
               {todo} a fazer · {doing} em andamento
             </div>
           </div>
         </div>
 
         {/* Gráfico */}
-        <div className="mt-4 bg-white border border-ink-200 rounded-xl2 p-5">
-          <div className="text-[13px] font-semibold text-ink-900">
+        <div className="mt-4 bg-elevated border border-border-base rounded-xl2 p-5">
+          <div className="text-[13px] font-semibold text-text-primary">
             Distribuição por status
           </div>
           <div className="mt-4">

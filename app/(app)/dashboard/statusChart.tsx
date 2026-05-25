@@ -25,7 +25,7 @@ export function StatusChart({ data }: { data: ChartData }) {
 
   if (total === 0) {
     return (
-      <div className="h-[180px] flex items-center justify-center text-[13px] text-ink-400">
+      <div className="h-[180px] flex items-center justify-center text-[13px] text-text-muted">
         Crie tarefas para ver a distribuição.
       </div>
     )
@@ -51,10 +51,10 @@ export function StatusChart({ data }: { data: ChartData }) {
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[22px] font-semibold text-ink-900">
+          <span className="text-[22px] font-semibold text-text-primary">
             {total}
           </span>
-          <span className="text-[11px] text-ink-400">tarefas</span>
+          <span className="text-[11px] text-text-muted">tarefas</span>
         </div>
       </div>
 
@@ -65,10 +65,10 @@ export function StatusChart({ data }: { data: ChartData }) {
               className="w-2.5 h-2.5 rounded-full"
               style={{ background: slice.color }}
             />
-            <span className="text-[13px] text-ink-600 flex-1">
+            <span className="text-[13px] text-text-secondary flex-1">
               {slice.name}
             </span>
-            <span className="text-[13px] font-semibold text-ink-900">
+            <span className="text-[13px] font-semibold text-text-primary">
               {slice.value}
             </span>
           </div>
