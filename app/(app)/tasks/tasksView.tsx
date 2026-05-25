@@ -15,6 +15,7 @@ type Task = {
   priority: string
   category: string | null
   due_date: string | null
+  position: number
 }
 
 export function TasksView({ tasks }: { tasks: Task[] }) {
