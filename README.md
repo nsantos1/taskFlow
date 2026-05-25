@@ -116,6 +116,10 @@ por impacto no portfólio e por interesse pessoal.
   - Autenticação
   - Storage de arquivos
 
+- Resend:
+  - Para envio de e-mail
+  - Integração com Supabase
+
 **Deploy**
 - Vercel.
 - Subdomínio configurado no domínio próprio (Hostinger), apontando para a
